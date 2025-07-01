@@ -1,9 +1,6 @@
 1	! UNBAC1 - Part 2 of the decompiler for BASIC-PLUS &
-	! Copyright @1979 by Bill Lortz &
-	! &
-
-800	  EXTEND &
-	\ DIM #1%,A%(255%),A$(255%)=16%,ADDR2%(240%),VAR2$(240%)=32%, &
+750 EXTEND
+800 DIM #1%,A%(255%),A$(255%)=16%,ADDR2%(240%),VAR2$(240%)=32%, &
 		P1%(8%),DTA$(31%)=16%,ADDR3%(4096%),VAR3$(4096%)=32% &
 	\ DIM TYP%(257%),O.LEN%(255%),DSC$(257%) &
 	\ DIM #3%,P%(32767%) &
@@ -11,11 +8,10 @@
 	\ DIM #4%,STACK$(32767%)=32% &
 	\ DIM     ADDR%(240%) &
 	\ DIM #6%,VAR$(240%)=32%,ADDR1%(4096%),VAR1$(4096%)=32% &
-	\ DIM #7%,STMT%(32767%) &
-
+	\ DIM #7%,STMT%(32767%)
 1000	  CHAIN "$DECOM"
-2000	  I$ = SYS('7'C) &
-	\ PRINT ""; &
+2000	  I$ = SYS(CHR$(7%)) &
+	\ PRINT " "; &
 	\ JOB$ = "DECM"+LEFT(I$,2%)+".TMP" &
 	\ I$ = RIGHT(I$,3%) &
 	\ OPEN JOB$ FOR INPUT AS FILE 1% &
@@ -92,8 +88,8 @@
 	\ L.STATE%=DONE% &
 	\ LPTR%=SCTH% &
 	\ EPTR%=0% &
-	\ E.TRM$='13'C+'10'C &
-	\ C.TRM$='10'C+'13'C+'0'C &
+	\ E.TRM$=CHR$(13%)+CHR$(10%) &
+	\ C.TRM$=CHR$(10%)+CHR$(13%)+CHR$(0%) &
 	\ C.TRM$=" &"+E.TRM$ IF EXTND% AND LFFLG%=0% &
 	\ WIDTH% = WIDTH% - 2% IF LEFT(C.TRM$,2%)=" &" &
 	\ FFIL$ = STRING$(LEN(CVTF$(0.))-2%,0%) &
@@ -122,7 +118,7 @@
 	\ PRINT #2%,"!"; IF L.STATE%=NEWLINE% &
 	\ PRINT #2% &
 	\ CLOSE 2% &
-	\ V$ = SYS('9'C) &
+	\ V$ = SYS(CHR$(9%)) &
 	\ STOP &
 	&
 	&
@@ -200,7 +196,7 @@
 		\ E$=E$+")" &
 		\ E$=E$+"="+NUM1$(2%*FNW%(T%+20%))+"%" &
 			IF C% IF FNB%(T%+28%) AND 4% &
-		\ PRINT #2%,C.TRM$+FNINDENT$+'9'C; &
+		\ PRINT #2%,C.TRM$+FNINDENT$+CHR$(9%); &
 			IF CCPOS(2%)+LEN(E$)>=WIDTH% &
 		\ PRINT #2%,CVT$$(E$,1%); &
 	\ NEXT L% &
@@ -210,7 +206,7 @@
 
 2400	! DATA statement processing routine &
 	  GOSUB 13000 &
-	\ PRINT #2%,"DATA"+'9'C; &
+	\ PRINT #2%,"DATA"+CHR$(9%); &
 	\ C%=0% &
 	\ E$=N$ &
 	\ FOR J%=BCOD%+1% TO ECOD% - 1% &
@@ -221,7 +217,7 @@
 		  IF I%=39% THEN &
 			IF C%=0% THEN C%=1% ELSE C%=0% IF C%=1% ELSE &
 		  IF I%=44% AND C%=0% THEN &
-			  PRINT #2%,C.TRM$;FNINDENT$;'9'C; &
+			  PRINT #2%,C.TRM$;FNINDENT$;CHR$(9%); &
 				IF CCPOS(2%)+LEN(E$)>=WIDTH% &
 			\ PRINT #2%,CVT$$(E$,1%); &
 			\ E$=N$
@@ -778,11 +774,11 @@
 	\ I.IND% = 0% &
 	\ IF L.STATE%=INLINE% OR L.STATE%=NEWLINE% THEN &
 		  A%=FNPRINT%("!") IF L.STATE%=NEWLINE% &
-		\ A%=FNPRINT%(C.TRM$+'9'C+"  ! Program name: "+LEFT(C.FIL$, &
+		\ A%=FNPRINT%(C.TRM$+CHR$(9%)+"  ! Program name: "+LEFT(C.FIL$, &
 			INSTR(1%,C.FIL$,".")-1%)+"		"+ &
 			"Compiled with SCALE "+NUM1$(SCALEF%)+" on V"+ &
 			CHR$(FNB%(SP%+2%))+CHR$(FNB%(SP%+3%))+"."+ &
-			CHR$(FNB%(SP%))+C.TRM$+'9'C+ &
+			CHR$(FNB%(SP%))+C.TRM$+CHR$(9%)+ &
 			"  ! Decompiled on "+DATE$(0%)+" at "+TIME$(0%)+ &
 			" by UNBAC Version "+VERSION$) &
 				IF SLASH.N%=0% &
@@ -792,7 +788,7 @@
 	\ A%=FNPRINT%(NUM1$(L%)+STRING$(F.IND%+I.IND%+1%+(T%=3%),9%)+"  ") &
 	\ IF EXTND%=-1% THEN L.STATE%=INLINE% &
 		\ EXTND%=-2% &
-		\ A%=FNPRINT%("EXTEND"+'10'C+'13'C+'0'C+'9'C)
+		\ A%=FNPRINT%("EXTEND"+CHR$(10%)+CHR$(13%)+CHR$(0%)+CHR$(9%))
 15520	  FNEND &
 	&
 	! Scans from current code pointer (BCOD%) to end of code (ECOD%) ptr &
@@ -1097,7 +1093,7 @@
 				  Z.P.I% = 0%
 16610			  IF Z.P.I%+Z.P.P%>WIDTH% AND Z.P.L.S%>1% THEN &
 				  PRINT #2%,CVT$$(LEFT(Z.P.A$,Z.P.L.S%-1%),1%); &
-					C.TRM$;FNINDENT$;'9'C; &
+					C.TRM$;FNINDENT$;CHR$(9%); &
 				\ Z.P.A$ = RIGHT(Z.P.A$,Z.P.L.S%) &
 				\ GOTO 16680
 16620			  Z.P.L.S% = Z.P.K% IF Z.P.C% > 127% &
@@ -1124,4 +1120,3 @@
 	\ PRINT &
 	\ FNEND
 32767	  END
-                                                                                                                                                                                                                                                                                                                                                                                 

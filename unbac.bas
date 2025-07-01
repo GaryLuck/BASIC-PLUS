@@ -1,9 +1,4 @@
 1	! Start of Decompiler for BASIC-PLUS &
-	! Programmed by Bill Lortz &
-	! July 12, 1979 &
-	! Copyright @1979 by Bill Lortz &
-	&
-
 800	  EXTEND
 810	  DIM ADDR%(348%),VAR$(240%) &
 	\ DIM #1%,A%(255%),A$(255%)=16%,ADDR2%(240%),VAR2$(240%)=32%, &
@@ -12,14 +7,14 @@
 
 1000	  EXTEND &
 	\ VERSION$="7.1" &
-	\ S1$="$" &
-	\ E$ = SYS('6'C+'9'C+'0'C) &
+	\ S1$="" &
+	\ E$ = SYS(CHR$(6%)+CHR$(9%)+CHR$(0%)) &
 	\ PRINT "UNBAC - ";VERSION$; "  "; &
 		CVT$$(RIGHT(E$,3%),4%),DATE$(0%);"  ";TIME$(0%) &
 	\ PRINT FNINM$ &
 	\ PRINT &
 	\ ON ERROR GOTO 19000 &
-	\ PRINT 'Type "?" for help.' &
+	\ PRINT 'TYPE "?" FOR HELP.' &
 	\ JOB$ = RIGHT(NUM1$(100%+ASCII(E$)/2%),2%)
 1010	  PRINT "[]"; &
 	\ GET #0% \ FIELD #0%, RECOUNT AS A$ &
@@ -39,7 +34,7 @@
 	\ A$ = A$+".BAC" IF I%=0% &
 	\ I% = INSTR(1%,A1$,".") &
 	\ A1$ = A1$+".BAS" IF I%=0% &
-	\ V$ = SYS('6'C+CHR$(-10%)+A$) &
+	\ V$ = SYS(CHR$(6%)+CHR$(-10%)+A$) &
 	\ L%=SWAP%(CVT$%(RIGHT(V$,13%))) &
 	\ I%=ASCII(RIGHT(S$,22%)) &
 	\ IF (STATUS AND 255%) THEN PRINT "?Must be on disk." &
@@ -51,7 +46,7 @@
 	\ IF Q%<1% OR Q%>4% THEN &
 		 PRINT "?Version # out of range (";NUM1$(Q%);")!" &
 		\ GOTO 1010
-1050	  V$ = SYS('6'C+CHR$(-10%)+A1$) &
+1050	  V$ = SYS(CHR$(6%)+CHR$(-10%)+A1$) &
 	\ IF (STATUS AND 255%)=0% THEN &
 		  OPEN A1$ FOR INPUT AS FILE 1% &
 		\ CLOSE 1% &
@@ -105,7 +100,7 @@
 	\ DTA$(29%)=FNFLG$("'") &
 	\ DTA$(30%)=FNFLG$('"') &
 	\ F1% = VAL(CVT$$(A$(65%),1%)) &
-	\ S$ = SYS('8'C+JOB$+A1$+"="+A$) &
+	\ S$ = SYS(CHR$(8%)+JOB$+A1$+"="+A$) &
 	\ SPDA% = FNW%(SP%+28%) &
 	\ FLEN% = FNB%(SP%+38%) &
 	\ VTBL% = SPDA% + 1214% &
@@ -155,7 +150,7 @@
 	\ GOTO 32767 IF F% AND 2% &
 	\ OPEN A1$ FOR OUTPUT AS FILE 1% &
 	\ PRINT #1%,'10	PRINT "UNBAC - ";CVT$$(RIGHT(SYS(CHR$(6%)+CHR$(9%)),3%)'+ &
-		',4%),DATE$(0%); &'+'10'C+'13'C+'0'C+'9'C+'9'C+'"  ";TIME$(0%)' &
+		',4%),DATE$(0%); &'+CHR$(10%)+CHR$(13%)+CHR$(0%)+CHR$(9%)+CHR$(9%)'"  ";TIME$(0%)' &
 	\ PRINT #1%,'	\ PRINT ';"'";'Type "?" for Help';"'" &
 	\ PRINT #1%,'	\ PRINT "[]"; \ GET \ FIELD RECOUNT AS A$' &
 	\ PRINT #1%,'	\ DECOMPILE A$' &
@@ -305,7 +300,7 @@
 	&
 	&
 
-15000	  DEF* FNERRTXT$(E%)=CVT$$(RIGHT(SYS('6'C+'9'C+ &
+15000	  DEF* FNERRTXT$(E%)=CVT$$(RIGHT(SYS(CHR$(6%)+CHR$(9%)+ &
 		CHR$(E%)),3%),4%) &
 
 15100	! Look up address A% in hash file.  Returns position of A% if found, &
@@ -687,9 +682,8 @@
 		\ F% = -1% &
 		\ RESUME 12020
 19999	PRINT FNERRTXT$(ERR);" at line ";NUM1$(ERL) &
-	\ V$ = SYS('9'C) &
+	\ V$ = SYS(CHR$(9%)) &
 	&
 	&
 
 32767 END
-                                                                                                                                                                                                                                                                                                                                               
